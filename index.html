@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Carousel Demo</title>
+    <link rel="stylesheet/less" href="carousel.less">
+    <script src="/script/less.js"></script>
+    <script src="/script/raphael.js"></script>
+    <script src="/script/rut.js"></script>
+    <script src="carousel.js"></script>
+    <script>
+    window.onload = function(){
+
+        var items = [
+
+            {
+                name: "About Us",
+                icon: "about.png"
+            },
+
+            {
+                name: "FAQ",
+                icon: "faq.png"
+            },
+
+            {
+                name: "Pie Chart",
+                icon: "pie1.png"
+            },
+
+            {
+                name: "Animated Pie Chart",
+                icon: "anipie.png"
+            }
+        ];
+
+        // Deliberately global for debug access
+        carousel = new Carousel(items);
+    };
+    </script>
+</head>
+<body>
+<h1>Carousel Demo</h1>
+<div id="carousel"></div>
+<button id="prev">Prev</button>
+<button id="next">Next</button>
+</body>
+</html>
