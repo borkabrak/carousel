@@ -1,28 +1,51 @@
+'use strict';
+
 var Carousel = function(items){
     var me = this;
-    me.paper = new Raphael("carousel", 800, 200);
-    me.items = me.paper.set();
+    me.paper = new Raphael("carousel", 800, 300);
+    me.paper.showRuler(50);
+    me.items = items;
 
-    me.paper.showRuler();
+    me.draw();
 
-    console.log("First item:%o", me.menu_item(items[0]));
 };
 
-Carousel.prototype.next = function(n){
-};
+Carousel.prototype = {
+    selected: function(){
+    },
 
-Carousel.prototype.prev = function(n){
-};
+    select: function(index){
+        console.log("Select menu item %s", index);
+    },
 
-Carousel.prototype.select = function(n){
-};
+    prev: function(){
+    },
 
-Carousel.prototype.menu_item = function(item_spec){
-    // return a Raphael set of elements composing a menu item.
-    // The returned item should be suitable for applying motions and transforms.
-    // It's own object?
-    var elements = this.paper.set();
-    return elements;
-    
-};
+    next: function(){
+    },
 
+    draw: function(){
+        var me = this;
+
+        var height = me.paper.height;
+        var width = me.paper.width / me.items.length;
+        var x = 0;
+        me.items.forEach(function(item){
+
+            var frame = me.paper.rect(x, 0, width, height).attr({
+                "stroke": "black",
+                "stroke-width": "3px",
+            });
+
+            var middle_of_frame = { 
+                x: frame.attr("x") + (frame.attr("width")  / 2), 
+                y: frame.attr("y") + (frame.attr("height") / 2), 
+            };
+
+            var text = me.paper.text(middle_of_frame.x, middle_of_frame.y, item.name);
+
+            x += frame.attr("width");
+            console.log("%s >> frame:%o (middle:%o), text:%o, next:%s", item.name, frame, middle_of_frame, text, x);
+        });
+    },
+};

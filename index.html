@@ -36,6 +36,16 @@
 
         // Deliberately global for debug access
         carousel = new Carousel(items);
+
+        carousel.select(2);
+
+        document.querySelector("#prev").onclick = function(event){
+            carousel.prev();
+        };
+
+        document.querySelector("#next").onclick = function(event){
+            carousel.next();
+        };
     };
     </script>
 </head>
