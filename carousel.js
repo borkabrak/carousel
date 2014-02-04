@@ -59,9 +59,12 @@ Carousel.prototype = {
             y: (me.paper.height - size.height) / 2
         };
 
-        var i = 0;
-        this.items.forEach(function(item){
+        for(var i = 0; i < me.items.length; i++){
+            var item = me.items[i];
             var elements = me.paper.set();
+
+            // position relative to active element
+            var position = i - me.active_index;
 
             // Draw containing box
             var rect = me.paper.rect(point.x, point.y, size.width, size.height).attr({
@@ -80,7 +83,7 @@ Carousel.prototype = {
             var element = me.paper.set(rect, text);
             me.elements.push(element);
 
-        });
+        };
     },
 
 };
