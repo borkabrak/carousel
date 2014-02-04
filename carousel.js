@@ -26,7 +26,7 @@ Carousel.prototype = {
     },
 
     next: function(){
-        this.active( this.active_index < this.elements.length  ? (this.active_index + 1) : this.elements.length );
+        this.active( this.active_index < this.elements.length - 1  ? (this.active_index + 1) : this.elements.length - 1 );
     },
 
     active: function(index){
