@@ -46,13 +46,16 @@ Carousel.prototype = {
     draw: function(){
         var me = this;
 
+        // Margin, in pixels
+        var margin = 20;
+
         var point = {
             x: 0,
             y: 0
         };
 
-        var size = { // size of the active element's containing 'box'
-            width: 200,
+        var size = { // size of each element
+            width: (me.paper.width / this.items.length) - (margin / 2 * (this.items.length - 1)),
             height: me.paper.height / 2
         }; 
 
@@ -73,7 +76,7 @@ Carousel.prototype = {
                 "fill": "white",
             });
 
-            point.x += size.width;
+            point.x += size.width + margin;
             var element = me.paper.set(rect, text);
             me.elements.push(element);
 
