@@ -53,7 +53,7 @@ Carousel.prototype = {
 
         var size = { // size of the active element's containing 'box'
             width: 200,
-            height: me.paper.height
+            height: me.paper.height / 2
         }; 
 
         var i = 0;
@@ -70,7 +70,7 @@ Carousel.prototype = {
 
             // Draw text
             var text = me.paper.text(point.x + size.width / 2, point.y + size.height / 2, item.name).attr({
-                "font-size": "22",
+                "font-size": "14",
                 "fill": "white",
             });
 
