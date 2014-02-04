@@ -9,14 +9,10 @@ var Carousel = function(items){
     //  * 'items' are js objects with properties describing menu items
     //
     //  * 'elements' are Raphael Element objects (graphical elements rendered on the screen)
-    //
-    //  * 'widgets' are sets (Raphael set()s) of elements that comprise a single 'thing' on-screen.
 
     me.items = items;
 
-    me.active_index = 2;    // initialize active
-
-    me.active_element = me.paper.set();
+    me.active_index = 0;    // initialize active
 
     me.elements = me.draw();
 
@@ -25,10 +21,24 @@ var Carousel = function(items){
 
 Carousel.prototype = {
 
+    prev: function(){
+        this.active( this.active_index > 0 ? (this.active_index - 1) : 0 );
+    },
+
+    next: function(){
+        this.active( this.active_index < this.elements.length  ? (this.active_index + 1) : this.elements.length );
+    },
+
     active: function(index){
-        if (typeof index !== "undefined") {
-            return this.elements[index];
-        };
+        var me = this;
+
+        me.elements[me.active_index].animate({transform: scale(-1)}, 250);
+
+        // If we're setting, then set
+        me.active_index = (typeof index !== "undefined") ? index : me.active_index;
+
+        me.elements[me.active_index].animate({transform: scale(0)}, 250);
+        return me.elements[me.active_index];
     },
 
     draw: function(){
@@ -69,7 +79,7 @@ Carousel.prototype = {
 
             // Draw text
             var text = me.paper.text(point.x + size.width / 2, point.y + size.height / 2, item.name).attr({
-                "font-size": "14",
+                "font-size": "18",
                 "fill": "white",
                 "transform": scale(position)
             });
