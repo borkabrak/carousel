@@ -4,11 +4,21 @@ var Carousel = function(items){
     var me = this;
     me.paper = new Raphael("carousel", 800, 300);
 
-    me.items = items;
+    // A word about naming:
+    //
+    //  * 'items' are js objects with properties describing menu items
+    //
+    //  * 'elements' are Raphael Element objects (graphical elements rendered on the screen)
+    //
+    //  * 'widgets' are sets (Raphael set()s) of elements that comprise a single 'thing' on-screen.
 
+    me.items = items;
+    me.active_index = 0;    // initialize active
+
+    me.active_element = me.paper.set();
     me.elements = me.paper.set();
 
-    me.active_item(0);
+    me.active_item(1);
 
     me.draw();
 
@@ -34,43 +44,41 @@ Carousel.prototype = {
     },
 
     draw: function(){
-        this.draw_active_item();
-    },
+        var me = this;
 
-    draw_active_item: function(){
-        // Draw and return the elements of the 'active' menu item.
-
-        console.log("paper: %o", this.paper);
-        // Draw the active item in the middle of the paper
-        
-        var center = { // center of the paper
-            x: this.paper.width / 2,
-            y: this.paper.height / 2,
+        var point = {
+            x: 0,
+            y: 0
         };
 
         var size = { // size of the active element's containing 'box'
-            width: 100,
-            height: 100 
+            width: 200,
+            height: me.paper.height
         }; 
 
-        var elements = this.paper.set();
+        var i = 0;
+        this.items.forEach(function(item){
+            console.log("item: %o point: %o", item, point);
+            var elements = me.paper.set();
 
-        var item = this.active_item();
+            // Draw containing box
+            var rect = me.paper.rect(point.x, point.y, size.width, size.height).attr({
+                "stroke-width": "3px",
+                "stroke": "#fff",
+                "fill": Raphael.hsb(point.x, 0.5, 0.5)
+            });
 
-        // Draw containing box
-        var rect = this.paper.rect(center.x - size.width / 2, center.y - size.height / 2, size.width, size.height).attr({
-            "fill": "#335"
+            // Draw text
+            var text = me.paper.text(point.x + size.width / 2, point.y + size.height / 2, item.name).attr({
+                "font-size": "22",
+                "fill": "white",
+            });
+
+            point.x += size.width;
+            var element = me.paper.set(rect, text);
+            me.elements.push(element);
+
         });
-
-        // Draw text
-        var text = this.paper.text(center.x, center.y, item.name).attr({
-            "font-size": "22",
-            "fill": "white",
-        });
-
-        elements.push(text, rect);
-        return elements;
-
     },
 
 };
