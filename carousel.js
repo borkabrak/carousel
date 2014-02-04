@@ -49,15 +49,15 @@ Carousel.prototype = {
         // Margin, in pixels
         var margin = 20;
 
-        var point = {
-            x: 0,
-            y: 0
-        };
-
         var size = { // size of each element
             width: (me.paper.width / this.items.length) - (margin / 2 * (this.items.length - 1)),
             height: me.paper.height / 2
         }; 
+
+        var point = {
+            x: margin,
+            y: (me.paper.height - size.height) / 2
+        };
 
         var i = 0;
         this.items.forEach(function(item){
