@@ -25,6 +25,12 @@ var Carousel = function(items){
 
 Carousel.prototype = {
 
+    active: function(index){
+        if (typeof index !== "undefined") {
+            return this.elements[index];
+        };
+    },
+
     draw: function(){
         var me = this;
 
