@@ -58,14 +58,13 @@ Carousel.prototype = {
 
         var i = 0;
         this.items.forEach(function(item){
-            console.log("item: %o point: %o", item, point);
             var elements = me.paper.set();
 
             // Draw containing box
             var rect = me.paper.rect(point.x, point.y, size.width, size.height).attr({
                 "stroke-width": "3px",
                 "stroke": "#fff",
-                "fill": Raphael.hsb(point.x, 0.5, 0.5)
+                "fill": Raphael.hsb(point.x / me.paper.width, 0.5, 0.5)
             });
 
             // Draw text
