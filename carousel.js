@@ -14,7 +14,7 @@ var Carousel = function(items){
 
     me.items = items;
 
-    me.active_index = 0;    // initialize active
+    me.active_index = 2;    // initialize active
 
     me.active_element = me.paper.set();
 
@@ -25,26 +25,10 @@ var Carousel = function(items){
 
 Carousel.prototype = {
 
-    active_item: function(index){
-        // return or set the active menu item
-        if (typeof index !== "undefined") {
-            this.active_index = index;
-        }
-
-        return this.items[this.active_index];
-
-    },
-
-    prev: function(){
-    },
-
-    next: function(){
-    },
-
     draw: function(){
         var me = this;
 
-        // reset elements
+        // Track drawn elements
         var elements = me.paper.set();
 
         // Margin, in pixels
@@ -64,7 +48,7 @@ Carousel.prototype = {
             var item = me.items[i];
 
             // Elements that visually comprise this item.
-            var elements = me.paper.set();
+            var item_elements = me.paper.set();
 
             // position relative to active element
             var position = i - me.active_index;
@@ -85,8 +69,8 @@ Carousel.prototype = {
             });
 
             point.x += size.width + margin;
-            var element = me.paper.set(rect, text);
-            elements.push(element);
+            var item_elements = me.paper.set(rect, text);
+            elements.push(item_elements);
 
         };
 
