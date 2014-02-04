@@ -13,14 +13,12 @@ var Carousel = function(items){
     //  * 'widgets' are sets (Raphael set()s) of elements that comprise a single 'thing' on-screen.
 
     me.items = items;
+
     me.active_index = 0;    // initialize active
 
     me.active_element = me.paper.set();
-    me.elements = me.paper.set();
 
-    me.active_item(1);
-
-    me.draw();
+    me.elements = me.draw();
 
     me.paper.showRuler(50);
 };
@@ -46,6 +44,9 @@ Carousel.prototype = {
     draw: function(){
         var me = this;
 
+        // reset elements
+        var elements = me.paper.set();
+
         // Margin, in pixels
         var margin = 20;
 
@@ -61,6 +62,8 @@ Carousel.prototype = {
 
         for(var i = 0; i < me.items.length; i++){
             var item = me.items[i];
+
+            // Elements that visually comprise this item.
             var elements = me.paper.set();
 
             // position relative to active element
@@ -70,20 +73,33 @@ Carousel.prototype = {
             var rect = me.paper.rect(point.x, point.y, size.width, size.height).attr({
                 "stroke-width": "3px",
                 "stroke": "#fff",
-                "fill": Raphael.hsb(point.x / me.paper.width, 0.5, 0.5)
+                "fill": Raphael.hsb(point.x / me.paper.width, 0.5, 0.5),
+                "transform": scale(position)
             });
 
             // Draw text
             var text = me.paper.text(point.x + size.width / 2, point.y + size.height / 2, item.name).attr({
                 "font-size": "14",
                 "fill": "white",
+                "transform": scale(position)
             });
 
             point.x += size.width + margin;
             var element = me.paper.set(rect, text);
-            me.elements.push(element);
+            elements.push(element);
 
         };
+
+        return elements;
+
     },
 
+};
+
+// Return a transformation string to be applied to an element, based on position.
+// position < 0 - it precedes the active element
+// position > 0 - follows the active element
+// position === 0 - it IS the active element
+function scale(position){
+    return position === 0 ? "" : "s 0.75,0.75";
 };
